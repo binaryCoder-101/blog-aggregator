@@ -11,7 +11,7 @@ import (
 func main() {
 	cfg, err := config.Read()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error reading JSON file: %v", err)
 	}
 
 	homeDir, err := os.UserHomeDir()
@@ -25,8 +25,8 @@ func main() {
 
 	data, err := os.ReadFile(filePath)
 	if err != nil {
-		log.Fatal("error reading json data")
+		log.Fatalf("error reading json data: %v", err)
 	}
 
-	fmt.Printf(string(data))
+	fmt.Printf("%+v", data)
 }
