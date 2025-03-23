@@ -13,6 +13,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error reading JSON file: %v", err)
 	}
+	fmt.Printf("Read config : %+v\n", cfg)
 
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
@@ -23,10 +24,10 @@ func main() {
 
 	cfg.SetUser("Misaque Ahmed", filePath)
 
-	data, err := os.ReadFile(filePath)
+	cfg, err = config.Read()
 	if err != nil {
-		log.Fatalf("error reading json data: %v", err)
+		log.Fatalf("error reading JSON file: %v", err)
 	}
 
-	fmt.Printf("%+v", data)
+	fmt.Printf("Read config again: %+v\n", cfg)
 }
