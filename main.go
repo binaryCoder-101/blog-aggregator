@@ -9,25 +9,56 @@ import (
 )
 
 func main() {
+
+	args := os.Args
+
+	if len(args) < 2 {
+		fmt.Println("error: too few arguments")
+		os.Exit(1)
+	}
+
+	cmdName := args[1]
+	cmdArgs := args[2:]
+
+	cmd := command{
+		commandName: cmdName,
+		commandArgs: cmdArgs,
+	}
+
 	cfg, err := config.Read()
 	if err != nil {
 		log.Fatalf("error reading JSON file: %v", err)
 	}
 	fmt.Printf("Read config : %+v\n", cfg)
 
-	homeDir, err := os.UserHomeDir()
+	s := state{}
+
+	s.configState = &cfg
+
+	c := commands{
+		commandHandler: make(map[string]func(*state, command) error),
+	}
+
+	c.register("login", handlerLogin)
+
+	err = c.run(&s, cmd)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	filePath := homeDir + "/.gatorconfig.json"
+	// homeDir, err := os.UserHomeDir()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	cfg.SetUser("Misaque Ahmed", filePath)
+	// filePath := homeDir + "/.gatorconfig.json"
 
-	cfg, err = config.Read()
-	if err != nil {
-		log.Fatalf("error reading JSON file: %v", err)
-	}
+	// cfg.SetUser("Misaque Ahmed", filePath)
 
-	fmt.Printf("Read config again: %+v\n", cfg)
+	// cfg, err = config.Read()
+	// if err != nil {
+	// 	log.Fatalf("error reading JSON file: %v", err)
+	// }
+
+	// fmt.Printf("Read config again: %+v\n", cfg)
 }
