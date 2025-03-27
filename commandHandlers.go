@@ -1,19 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func handlerLogin(s *state, cmd command) error {
-	if len(cmd.commandArgs) < 1 {
+	if len(cmd.commandArgs) == 0 {
 		return fmt.Errorf("error: username is required")
-	}
-	if len(cmd.commandArgs) > 1 {
-		return fmt.Errorf("error: too many arguments")
 	}
 
 	if s.configState == nil {
 		return fmt.Errorf("error: config is uninitialized")
 	}
-	s.configState.CurrentUserName = cmd.commandArgs[0]
+
+	username := strings.Join(cmd.commandArgs[0:], " ")
+
+	err := s.configState.SetUser(username)
+	if err != nil {
+		return err
+	}
 
 	fmt.Printf("success: user has been set")
 
