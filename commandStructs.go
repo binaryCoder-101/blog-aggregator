@@ -19,6 +19,11 @@ func (c *commands) run(s *state, cmd command) error {
 	if s == nil {
 		return fmt.Errorf("error: state is uninitialized")
 	}
-	c.commandHandler[cmd.commandName](s, cmd)
+
+	err := c.commandHandler[cmd.commandName](s, cmd)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

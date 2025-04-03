@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error reading JSON file: %v", err)
 	}
-	fmt.Printf("Read config : %+v\n", cfg)
+	// fmt.Printf("Read config : %+v\n", cfg)
 
 	s := state{}
 
