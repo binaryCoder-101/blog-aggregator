@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/binaryCoder-101/blog-aggregator/internal/config"
+	_ "github.com/lib/pq"
 )
 
 func main() {
