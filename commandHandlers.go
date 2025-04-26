@@ -27,5 +27,9 @@ func handlerLogin(s *state, cmd command) error {
 }
 
 func handlerRegister(s *state, cmd command) error {
+	if len(cmd.commandArgs) == 0 {
+		return fmt.Errorf("error: username is required")
+	}
+
 	return nil
 }

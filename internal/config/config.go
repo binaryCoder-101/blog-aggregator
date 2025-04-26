@@ -12,6 +12,8 @@ type Config struct {
 	CurrentUserName string `json:"current_user_name"`
 }
 
+// Read reads the config file from the user's home directory
+// and unmarshals it into a Config struct
 func Read() (Config, error) {
 
 	filePath, err := getConfigFilePath()
@@ -34,6 +36,8 @@ func Read() (Config, error) {
 	return config, nil
 }
 
+// SetUser sets the current user in the config file
+// and writes the updated config back to the file
 func (c *Config) SetUser(userName string) error {
 	c.CurrentUserName = userName
 
@@ -55,6 +59,7 @@ func (c *Config) SetUser(userName string) error {
 	return nil
 }
 
+// GetConfigFilePath returns the full path to the config file
 func getConfigFilePath() (string, error) {
 
 	fullPath := ""
